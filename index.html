@@ -23,9 +23,9 @@
 
   <main class="main">
     <div class="container">
-
       <section class="card" id="config-section">
 
+        <!-- API Key -->
         <div class="field">
           <label for="apiKey">Google Gemini API Key</label>
           <div class="api-row">
@@ -37,6 +37,7 @@
 
         <hr class="divider" />
 
+        <!-- Title + Lang -->
         <div class="two-col">
           <div class="field">
             <label for="titleText">標題文字</label>
@@ -52,6 +53,38 @@
           </div>
         </div>
 
+        <hr class="divider" />
+
+        <!-- ★ Style Presets -->
+        <div class="field">
+          <label>風格預設庫 <span class="label-tip">一鍵套用</span></label>
+          <div class="preset-grid">
+            <button class="preset-card" onclick="applyPreset(this)" data-preset="claymation">
+              <span class="preset-icon">🧸</span>
+              <span class="preset-name">3D Claymation</span>
+              <span class="preset-desc">微立體黏土風<br>適合活潑 App 介面</span>
+            </button>
+            <button class="preset-card" onclick="applyPreset(this)" data-preset="minimalist">
+              <span class="preset-icon">◻</span>
+              <span class="preset-name">Minimalist 2D Vector</span>
+              <span class="preset-desc">極簡向量插圖<br>適合理財 / 稅務活動</span>
+            </button>
+            <button class="preset-card" onclick="applyPreset(this)" data-preset="flatline">
+              <span class="preset-icon">✏️</span>
+              <span class="preset-name">Flat Clean Outline</span>
+              <span class="preset-desc">乾淨黑線扁平風<br>適合清新感 Banner</span>
+            </button>
+            <button class="preset-card" onclick="applyPreset(this)" data-preset="luxury">
+              <span class="preset-icon">◈</span>
+              <span class="preset-name">Luxury Finance</span>
+              <span class="preset-desc">深藍金屬高端感<br>適合私銀 / 基金</span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Style Tags -->
         <div class="field">
           <label>設計風格 <span class="count-badge" id="styleCount">0 已選</span></label>
 
@@ -65,7 +98,6 @@
               <span class="tag" onclick="toggleTag(this)">極簡主義</span>
             </div>
           </div>
-
           <div class="style-group">
             <span class="group-label">情感</span>
             <div class="tag-row">
@@ -76,7 +108,6 @@
               <span class="tag" onclick="toggleTag(this)">清新溫柔</span>
             </div>
           </div>
-
           <div class="style-group">
             <span class="group-label">技法</span>
             <div class="tag-row">
@@ -88,7 +119,6 @@
               <span class="tag" onclick="toggleTag(this)">金屬質感</span>
             </div>
           </div>
-
           <div class="style-group">
             <span class="group-label">地域</span>
             <div class="tag-row">
@@ -99,7 +129,6 @@
               <span class="tag" onclick="toggleTag(this)">中式國潮</span>
             </div>
           </div>
-
           <div class="style-group">
             <span class="group-label industry">產業</span>
             <div class="tag-row">
@@ -117,6 +146,28 @@
           </div>
         </div>
 
+        <hr class="divider" />
+
+        <!-- ★ Background & Mood -->
+        <div class="field">
+          <label>背景與氛圍 <span class="label-tip">可多選</span></label>
+          <div class="tag-row">
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="soft studio lighting">柔和影棚光</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="financial icons floating around, coins graphs charts">金幣圖表漂浮</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="vibrant gradient background, colorful mesh gradient">漸層背景</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="dark luxury background, deep navy">深色奢華背景</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="clean white background, minimal">純白極簡背景</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="bokeh light effect, out of focus city lights">散景光斑效果</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="abstract geometric shapes floating">幾何圖形漂浮</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="golden hour sunlight, warm atmosphere">黃金時刻陽光</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="glassmorphism frosted glass effect">毛玻璃質感</span>
+            <span class="tag tag--mood" onclick="toggleTag(this)" data-en="particle light effect, glowing dots">粒子光點特效</span>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Scene + Platform -->
         <div class="two-col">
           <div class="field">
             <label>使用場景</label>
@@ -141,6 +192,38 @@
           </div>
         </div>
 
+        <!-- ★ Aspect Ratio (visual blocks) -->
+        <div class="field" id="ar-field">
+          <label>Midjourney 比例 <span class="label-tip">點選尺寸</span></label>
+          <div class="ar-grid">
+            <button class="ar-card" onclick="selectAR(this)" data-ar="--ar 16:9">
+              <div class="ar-shape ar-16-9"></div>
+              <span class="ar-label">16:9</span>
+              <span class="ar-desc">Banner / 橫幅</span>
+            </button>
+            <button class="ar-card" onclick="selectAR(this)" data-ar="--ar 4:5">
+              <div class="ar-shape ar-4-5"></div>
+              <span class="ar-label">4:5</span>
+              <span class="ar-desc">社群圖 / EDM</span>
+            </button>
+            <button class="ar-card" onclick="selectAR(this)" data-ar="--ar 1:1">
+              <div class="ar-shape ar-1-1"></div>
+              <span class="ar-label">1:1</span>
+              <span class="ar-desc">限時動態封面</span>
+            </button>
+            <button class="ar-card" onclick="selectAR(this)" data-ar="--ar 9:16">
+              <div class="ar-shape ar-9-16"></div>
+              <span class="ar-label">9:16</span>
+              <span class="ar-desc">限時 / Reels</span>
+            </button>
+            <button class="ar-card" onclick="selectAR(this)" data-ar="--ar 3:1">
+              <div class="ar-shape ar-3-1"></div>
+              <span class="ar-label">3:1</span>
+              <span class="ar-desc">超寬橫幅</span>
+            </button>
+          </div>
+        </div>
+
         <button class="btn-generate" id="generateBtn" onclick="generate()">
           <span class="btn-icon">✦</span> 產生標題設計 Prompt
         </button>
@@ -148,7 +231,6 @@
       </section>
 
       <section id="output"></section>
-
     </div>
   </main>
 
