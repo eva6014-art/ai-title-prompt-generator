@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 標題設計 Prompt 產生器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">Title Prompter</span>
+      </div>
+      <p class="header-sub">輸入標題文字，AI 幫你設計視覺風格 prompt，複製後貼到 ChatGPT / Gemini 產圖</p>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container">
+
+      <section class="card" id="config-section">
+
+        <div class="field">
+          <label for="apiKey">Google Gemini API Key</label>
+          <div class="api-row">
+            <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off" />
+            <button class="btn-ghost" id="toggleKeyBtn" onclick="toggleKey()">顯示</button>
+          </div>
+          <p class="field-hint">Key 僅存於瀏覽器記憶體，不會傳送到任何伺服器。<a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">取得 API Key ↗</a></p>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="two-col">
+          <div class="field">
+            <label for="titleText">標題文字</label>
+            <input type="text" id="titleText" placeholder="例：夏日特賣、品牌發表會..." />
+          </div>
+          <div class="field">
+            <label>生成語言</label>
+            <div class="lang-tabs">
+              <button class="lang-tab active" data-lang="zh" onclick="setLang('zh',this)">中文</button>
+              <button class="lang-tab" data-lang="en" onclick="setLang('en',this)">英文</button>
+              <button class="lang-tab" data-lang="both" onclick="setLang('both',this)">兩種都要</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>設計風格 <span class="count-badge" id="styleCount">0 已選</span></label>
+
+          <div class="style-group">
+            <span class="group-label">質感</span>
+            <div class="tag-row">
+              <span class="tag" onclick="toggleTag(this)">現代簡約</span>
+              <span class="tag" onclick="toggleTag(this)">奢華高端</span>
+              <span class="tag" onclick="toggleTag(this)">工業冷酷</span>
+              <span class="tag" onclick="toggleTag(this)">自然有機</span>
+              <span class="tag" onclick="toggleTag(this)">極簡主義</span>
+            </div>
+          </div>
+
+          <div class="style-group">
+            <span class="group-label">情感</span>
+            <div class="tag-row">
+              <span class="tag" onclick="toggleTag(this)">可愛活潑</span>
+              <span class="tag" onclick="toggleTag(this)">復古懷舊</span>
+              <span class="tag" onclick="toggleTag(this)">浪漫夢幻</span>
+              <span class="tag" onclick="toggleTag(this)">神秘暗黑</span>
+              <span class="tag" onclick="toggleTag(this)">清新溫柔</span>
+            </div>
+          </div>
+
+          <div class="style-group">
+            <span class="group-label">技法</span>
+            <div class="tag-row">
+              <span class="tag" onclick="toggleTag(this)">霓虹發光</span>
+              <span class="tag" onclick="toggleTag(this)">科技感</span>
+              <span class="tag" onclick="toggleTag(this)">手寫塗鴉</span>
+              <span class="tag" onclick="toggleTag(this)">3D立體</span>
+              <span class="tag" onclick="toggleTag(this)">水彩暈染</span>
+              <span class="tag" onclick="toggleTag(this)">金屬質感</span>
+            </div>
+          </div>
+
+          <div class="style-group">
+            <span class="group-label">地域</span>
+            <div class="tag-row">
+              <span class="tag" onclick="toggleTag(this)">日系清新</span>
+              <span class="tag" onclick="toggleTag(this)">韓系時尚</span>
+              <span class="tag" onclick="toggleTag(this)">歐美大片</span>
+              <span class="tag" onclick="toggleTag(this)">台灣在地</span>
+              <span class="tag" onclick="toggleTag(this)">中式國潮</span>
+            </div>
+          </div>
+
+          <div class="style-group">
+            <span class="group-label industry">產業</span>
+            <div class="tag-row">
+              <span class="tag tag--industry" onclick="toggleTag(this)">金融理財</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">銀行信託</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">投資基金</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">保險安全</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">科技新創</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">醫療健康</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">餐飲美食</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">時尚美妝</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">教育學習</span>
+              <span class="tag tag--industry" onclick="toggleTag(this)">房地產</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>使用場景</label>
+            <div class="tag-row">
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">社群貼文</span>
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">活動海報</span>
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">網站橫幅</span>
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">影片縮圖</span>
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">Logo 設計</span>
+              <span class="tag tag--single" data-group="scene" onclick="toggleSingle(this,'scene')">包裝設計</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>目標平台</label>
+            <div class="tag-row">
+              <span class="tag tag--single active" data-group="platform" onclick="toggleSingle(this,'platform')">ChatGPT / DALL-E</span>
+              <span class="tag tag--single" data-group="platform" onclick="toggleSingle(this,'platform')">Midjourney</span>
+              <span class="tag tag--single" data-group="platform" onclick="toggleSingle(this,'platform')">Gemini Imagen</span>
+              <span class="tag tag--single" data-group="platform" onclick="toggleSingle(this,'platform')">Stable Diffusion</span>
+              <span class="tag tag--single" data-group="platform" onclick="toggleSingle(this,'platform')">通用格式</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-generate" id="generateBtn" onclick="generate()">
+          <span class="btn-icon">✦</span> 產生標題設計 Prompt
+        </button>
+
+      </section>
+
+      <section id="output"></section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>使用 <a href="https://ai.google.dev/" target="_blank" rel="noopener">Google Gemini API</a> 驅動 · 產出的 prompt 可直接用於 ChatGPT、Midjourney、Gemini 等平台</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
