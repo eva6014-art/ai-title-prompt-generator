@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/28110811/README.md)
+[README.md](https://github.com/user-attachments/files/28111994/README.md)
 # AI 標題設計 Prompt 產生器
 
 用 Google Gemini API 自動產出標題文字的圖片生成 prompt，直接複製貼到 ChatGPT、Midjourney、Gemini Imagen 等平台產圖。
